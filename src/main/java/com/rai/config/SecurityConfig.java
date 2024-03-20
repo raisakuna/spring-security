@@ -11,15 +11,41 @@ import static org.springframework.security.config.Customizer.withDefaults;
 
 @Configuration
 @EnableWebSecurity
-public class SecurityConfig  {
+public class SecurityConfig {
+
+    // Custom configuration for security
 
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity httpSecurity) throws Exception {
         httpSecurity.authorizeHttpRequests((requests) ->
-                requests.requestMatchers("/user","/admin","/user").authenticated()
-                        .requestMatchers("/public").permitAll());
+                requests.requestMatchers("/myBalance", "/myAccount", "/myLoan", "/myCards", "/user", "/admin", "/user").authenticated()
+                        .requestMatchers("/notice", "/contact", "/public").permitAll());
         httpSecurity.formLogin(withDefaults());
         httpSecurity.httpBasic(withDefaults());
         return httpSecurity.build();
     }
+
+    // Denying all Request configuration
+   /*
+   @Bean
+    public SecurityFilterChain defaultSecurityFilterChain(HttpSecurity http) throws Exception{
+        http.authorizeHttpRequests((requests)->
+                requests.anyRequest().denyAll());
+                http.formLogin(withDefaults());
+                http.httpBasic(withDefaults());
+        return http.build();
+
+    }*/
+
+    // Accepting any request
+    /*
+    @Bean
+    public SecurityFilterChain defaultSecurityFilterChain(HttpSecurity http) throws Exception{
+        http.authorizeHttpRequests((requests)->
+                requests.anyRequest().permitAll();
+        http.formLogin(withDefaults());
+        http.httpBasic(withDefaults());
+        return http.build();
+
+}*/
 }
